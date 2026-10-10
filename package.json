@@ -1,0 +1,32 @@
+{
+  "name": "badgr-mcp",
+  "version": "1.1.0",
+  "description": "Badgr MCP server \u2014 provision GPU jobs and model endpoints from coding agents",
+  "type": "module",
+  "bin": {
+    "badgr-mcp": "./src/server.js"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.8",
+    "js-yaml": "^4.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "mcp",
+    "gpu",
+    "ai",
+    "compute",
+    "badgr",
+    "llm"
+  ],
+  "license": "Apache-2.0"
+}

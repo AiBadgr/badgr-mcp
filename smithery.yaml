@@ -1,0 +1,43 @@
+# Smithery configuration: https://smithery.ai/docs/config#smitheryyaml
+# Deploy with the monorepo base directory set to packages/badgr-mcp.
+build:
+  dockerfile: Dockerfile
+  dockerBuildPath: .
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - badgrApiKey
+    properties:
+      badgrApiKey:
+        type: string
+        description: Badgr API key from https://aibadgr.com
+      maxPricePerHour:
+        type: number
+        default: 5
+        description: Hard USD/hr cap applied to every job
+      maxJobCost:
+        type: number
+        default: 5
+        description: Hard USD cap on one launched agent task
+      maxRuntimeMinutes:
+        type: integer
+        default: 60
+        description: Max minutes any deployed model may run
+      baseUrl:
+        type: string
+        default: https://aibadgr.com/v1
+        description: API endpoint override
+  commandFunction: |-
+    (config) => ({
+      command: 'node',
+      args: ['src/server.js'],
+      env: {
+        BADGR_API_KEY: config.badgrApiKey,
+        BADGR_MAX_PRICE: String(config.maxPricePerHour ?? 5),
+        BADGR_MAX_JOB_COST: String(config.maxJobCost ?? 5),
+        BADGR_MAX_RUNTIME: String(config.maxRuntimeMinutes ?? 60),
+        BADGR_BASE_URL: config.baseUrl || 'https://aibadgr.com/v1'
+      }
+    })
